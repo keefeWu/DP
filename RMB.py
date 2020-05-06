@@ -5,7 +5,6 @@ sys.setrecursionlimit(100000)
 scoreList = [1, 5, 11]
 # scoreList = [11, 5, 1]
 scoreDict = {}
-path = []
 def getMinNum(target):
     if target in scoreDict:
         return scoreDict[target]
@@ -23,7 +22,26 @@ def getMinNum(target):
     scoreDict[target] = num
     return num
 
+def getMinNumLoop(target):
+    for i in range(min(scoreList), target + 1):
+        if i in scoreList:
+            scoreDict[i] = 1
+            continue
+        num = -1
+        for score in scoreList:
+            if i - score <= 0:
+                continue
+            print("%d:%d\n"%(i, num))
+
+            if num == -1:
+                num = scoreDict[i - score] + 1
+                continue
+            num = min(num, scoreDict[i - score] + 1)
+        scoreDict[i] = num
+        print("%d:%d\n"%(i, num))
+    return scoreDict[target]
 
 target = 100
-num = getMinNum(target)
+num = getMinNumLoop(target)
 print(num)
+print(scoreDict)
