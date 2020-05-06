@@ -7,7 +7,6 @@ scoreList = [1, 5, 11]
 scoreDict = {}
 path = []
 def getMinNum(target):
-    global path
     if target in scoreDict:
         return scoreDict[target]
 
@@ -15,20 +14,16 @@ def getMinNum(target):
     if target in scoreList:
         scoreDict[target] = 1
         return 1
-    numDict = {}
-
+    numList = []
     for i in range(len(scoreList)):
         if target - scoreList[i] < 0:
             continue
-        numDict[getMinNum(target - scoreList[i])] = scoreList[i]
-    numList = list(numDict.keys())
+        numList.append(getMinNum(target - scoreList[i]))
     num = min(numList) + 1
     scoreDict[target] = num
-    path.append(numDict[num - 1])
     return num
 
 
 target = 100
 num = getMinNum(target)
 print(num)
-print(path)
